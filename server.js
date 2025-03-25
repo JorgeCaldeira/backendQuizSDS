@@ -1,10 +1,13 @@
 const express = require("express");
+const cors = require("cors"); // Import the CORS package
 const fs = require("fs");
 const path = require("path");
 
 const app = express();
-app.use(express.json()); // Parse JSON requests
+app.use(cors()); // Enable CORS for all routes
+app.use(express.json()); // Middleware to parse JSON data
 
+// Root route for testing
 app.get("/", (req, res) => {
     res.send("Backend is up and running!");
 });
@@ -13,7 +16,7 @@ app.get("/", (req, res) => {
 app.post("/save-quiz", (req, res) => {
     const { email, score, time } = req.body;
 
-    if (!email || !score || !time) {
+    if (!email || typeof score !== "number" || typeof time !== "number") {
         return res.status(400).send("Invalid data.");
     }
 
@@ -21,18 +24,20 @@ app.post("/save-quiz", (req, res) => {
     const filePath = path.join(__dirname, fileName);
 
     const row = `${email},${score},${time}\n`;
+
     fs.appendFile(filePath, row, (err) => {
         if (err) {
-            console.error(err);
-            return res.status(500).send("Error saving data.");
+            console.error("Error writing to CSV file:", err);
+            return res.status(500).send("Failed to save data.");
         }
 
-        res.send("Data saved successfully!");
+        console.log("Data saved successfully!");
+        res.status(200).send("Data saved successfully!");
     });
 });
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
