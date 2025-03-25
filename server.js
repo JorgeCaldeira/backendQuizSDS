@@ -5,6 +5,10 @@ const path = require("path");
 const app = express();
 app.use(express.json()); // Parse JSON requests
 
+app.get("/", (req, res) => {
+    res.send("Backend is up and running!");
+});
+
 // Endpoint to save quiz results
 app.post("/save-quiz", (req, res) => {
     const { email, score, time } = req.body;
