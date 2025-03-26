@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors"); // Import the CORS package
 const fs = require("fs");
 const path = require("path");
+const AWS = require("aws-sdk");
+require("dotenv").config();
 
 const app = express();
 app.use(cors()); // Enable CORS for all routes
@@ -30,7 +32,8 @@ app.post("/save-quiz", (req, res) => {
             console.error("Error writing to CSV file:", err);
             return res.status(500).send("Failed to save data.");
         }
-
+        const fileContent = fs.readFileSync(filePath);
+        uploadToR2("quizzes-sds", fileName, fileContent);
         console.log("Data saved successfully!");
         res.status(200).send("Data saved successfully!");
     });
@@ -41,3 +44,26 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+const s3 = new AWS.S3({
+    endpoint: "https://eu.r2.cloudflarestorage.com",
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY_ID,
+});
+
+const uploadToR2 = (bucketName, fileName, fileContent) => {
+    const params = {
+        Bucket: bucketName,
+        Key: fileName,
+        Body: fileContent,
+    };
+    s3.upload(params, (err, data) => {
+        if(err) {
+            console.error("Error uploading to R2:", err);
+        }else{
+            console.log("File uploaded successfully:", data.Location);
+        }
+    });
+};
+
+
