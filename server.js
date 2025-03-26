@@ -46,7 +46,7 @@ app.listen(PORT, () => {
 });
 
 const s3 = new AWS.S3({
-    endpoint: "https://eu.r2.cloudflarestorage.com",
+    endpoint: "https://1d5bedc6e06a996c3ca93b5e69f491de.r2.cloudflarestorage.com/quizzes-sds",
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY_ID,
 });
