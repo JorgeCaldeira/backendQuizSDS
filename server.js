@@ -1,8 +1,8 @@
 //import express, { Request, Response } from "express";
 
-if (!process.env.D1_DATABASE_URL) {
-    throw new Error("Environment variable D1_DATABASE_URL is not set.");
-}
+//if (!process.env.D1_DATABASE_URL) {
+//    throw new Error("Environment variable D1_DATABASE_URL is not set.");
+//}
 
 
 //const express = require("express");
@@ -10,7 +10,7 @@ const cors = require("cors"); // Import the CORS package
 const fs = require("fs");
 const path = require("path");
 const AWS = require("aws-sdk");
-const {D1Database} = require("@cloudflare/d1");
+//const {D1Database} = require("@cloudflare/d1");
 const express = require("express");
 require("dotenv").config();
 
@@ -18,7 +18,7 @@ const app = express();
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Middleware to parse JSON data
 
-const db = new D1Database(process.env.D1_DATABASE_URL)
+//const db = new D1Database(process.env.D1_DATABASE_URL)
 // Root route for testing
 app.get("/", (req , res ) => {
     res.send("Backend is up and running!");
