@@ -1,11 +1,17 @@
 import express, { Request, Response } from "express";
 
+if (!process.env.D1_DATABASE_URL) {
+    throw new Error("Environment variable D1_DATABASE_URL is not set.");
+}
+
+
 //const express = require("express");
 const cors = require("cors"); // Import the CORS package
 const fs = require("fs");
 const path = require("path");
 const AWS = require("aws-sdk");
 const {D1Database} = require("@cloudflare/d1");
+//const express1 = require("express");
 require("dotenv").config();
 
 const app = express();
