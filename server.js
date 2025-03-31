@@ -70,7 +70,7 @@ app.post("/save-quiz", (req, res) => {
         res.status(200).send("Data saved successfully!");
     });
 
-    fn2 = `quiz_${new Date().toISOString().split("T")[0]}_${Date.now()}.csv`;
+    /*fn2 = `quiz_${new Date().toISOString().split("T")[0]}_${Date.now()}.csv`;
     const fp2 = path.join(__dirname, fn2);
     if (!fs.existsSync(fp2)) {
         console.log(`Creating new file: ${fn2}`);
@@ -87,7 +87,7 @@ app.post("/save-quiz", (req, res) => {
         uploadToR2("quizzes-sds", fn2, fileContent);
         console.log("Data saved successfully!");
         res.status(200).send("Data saved successfully!");
-    });
+    });*/
 
 });
 
