@@ -25,7 +25,7 @@ app.get("/", (req , res ) => {
 });
 
 // Endpoint to save quiz results
-app.post("/save-quiz", async (req, res) => {
+app.post("/save-quiz", (req, res) => {
     const { email, score, time } = req.body;
 
     if (!email || typeof score !== "number" || typeof time !== "number") {  
