@@ -26,9 +26,9 @@ app.get("/", (req , res ) => {
 
 // Endpoint to save quiz results
 app.post("/save-quiz", (req, res) => {
-    const { email, score, time } = req.body;
+    const { username, email, score, time } = req.body;
 
-    if (!email || typeof score !== "number" || typeof time !== "number") {  
+    if (!username || !email || typeof score !== "number" || typeof time !== "number") {  
         return res.status(400).send("Invalid data.");;
     }
    /* const sqlQuery = `
@@ -55,7 +55,7 @@ app.post("/save-quiz", (req, res) => {
         console.log(`Appending to existing file: ${fileName}`);
     }
 
-    const row = `${email},${score},${time}\n`;
+    const row = `${username},${email},${score},${time}\n`;
 
 
 
